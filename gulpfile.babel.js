@@ -52,7 +52,7 @@ gulp.task('js', () => {
 
 gulp.task('pages', () => {
     return gulp.src(['app/views/*.ejs'])
-        .pipe(gulp.dest('server/wiews'))
+        .pipe(gulp.dest('server/views'))
         .pipe(gulpif(args.watch, livereload()))
 });
 
@@ -80,15 +80,15 @@ gulp.task('server', (cb) => {
     server.start();
 
     gulp.watch([
-        'server/public/css/!*.css',
-        'server/wiews/!*.ejs',
-        'server/public/js/!*.js'
+        'server/public/css/*.css',
+        'server/views/*.ejs',
+        'server/public/js/*.js'
     ], (file) => {
         server.notify.apply(server, [file])
     });
 
     gulp.watch([
-        'server/routes/!**!/!*.js',
+        'server/routes/**/*.js',
         'server/app.js'
     ], () => {
         server.start.bind(server)();
@@ -99,13 +99,14 @@ gulp.task('server', (cb) => {
 
 gulp.task('browser', (cb) => {
     if (!args.watch) return cb();
-    gulp.watch('app/!**!/!*.js', ['js']);
-    gulp.watch('app/!**!/!*.ejs', ['pages']);
-    gulp.watch('app/!**/!*.less', ['less']);
+    console.log('需要监听')
+    gulp.watch('app/**/*.js', ['js']);
+    gulp.watch('app/**/*.ejs', ['pages']);
+    gulp.watch('app/**/*.less', ['less']);
 });
 
 gulp.task('del', () => {
-    return del(['server/public', 'server/wiews'])
+    return del(['server/public', 'server/views'])
 });
 
 gulp.task('build', gulpSequence('del', 'less', 'pages', 'js', ['browser', 'server']));
