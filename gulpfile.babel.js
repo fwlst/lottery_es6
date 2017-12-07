@@ -60,12 +60,28 @@ gulp.task('pages', () => {
 gulp.task('less', () => {
     return gulp.src(['app/less/*.less'])
         .pipe(less())
-        .pipe(gulp.dest('server/public/css'))
-        .pipe(minifyCss())
         .pipe(autoprefixer({
             browsers: ['last 5 versions'],
             cascade: false
         }))
+        .pipe(gulp.dest('server/public/css'))
+        .pipe(minifyCss())
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(gulp.dest('server/public/css'))
+        .pipe(gulpif(args.watch, livereload()))
+});
+
+
+gulp.task('css', () => {
+    return gulp.src(['app/css/*.css'])
+        //.pipe(autoprefixer({
+        //    browsers: ['last 5 versions'],
+        //    cascade: false
+        //}))
+        .pipe(gulp.dest('server/public/css'))
+        //.pipe(minifyCss())
         .pipe(rename({
             suffix: '.min'
         }))
@@ -99,17 +115,17 @@ gulp.task('server', (cb) => {
 
 gulp.task('browser', (cb) => {
     if (!args.watch) return cb();
-    console.log('需要监听')
     gulp.watch('app/**/*.js', ['js']);
     gulp.watch('app/**/*.ejs', ['pages']);
     gulp.watch('app/**/*.less', ['less']);
+    gulp.watch('app/**/*.css', ['css']);
 });
 
 gulp.task('del', () => {
     return del(['server/public', 'server/views'])
 });
 
-gulp.task('build', gulpSequence('del', 'less', 'pages', 'js', ['browser', 'server']));
+gulp.task('build', gulpSequence('del', 'css', 'less', 'pages', 'js', ['browser', 'server']));
 
 gulp.task('default', ['build']);
 

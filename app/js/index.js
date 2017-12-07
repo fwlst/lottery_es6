@@ -1,4 +1,17 @@
-let a = '王八蛋';
+import 'babel-polyfill'
+//import lottery from './lottery'
 
 
-document.body.innerHTML = a;
+
+
+
+
+
+
+
+
+
+
+
+
+
