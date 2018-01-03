@@ -47,7 +47,7 @@ class Timer {
             self.lastTime = r.join('');
             update.call(self, r.join(''));
             setTimeout(() => {
-                self.countDown(end, update, handle);
+                self.countDown(start,end, update, handle);
             }, 1000)
         }
     }

@@ -3988,6 +3988,8 @@ module.exports = __webpack_require__(125);
 
 __webpack_require__(126);
 
+__webpack_require__(329);
+
 /***/ }),
 /* 126 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9577,6 +9579,73 @@ module.exports = function (regExp, replace) {
     return String(it).replace(regExp, replacer);
   };
 };
+
+/***/ }),
+/* 329 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+{
+    var arr = Array.of(1, 2, 3, 4, 5, 6);
+    console.log('arr:', arr);
+
+    var arr1 = Array.of();
+    console.log('arr1:', arr1);
+}
+
+{
+    var p = document.querySelectorAll('p');
+    //console.log('p:',p,p.length);
+    var pArr = Array.from(p);
+    pArr.forEach(function (arr, index) {
+        console.log(arr.textContent, index);
+    });
+
+    console.log('第二个参数(只能是function)相当于map功能:', Array.from([1, 2, 3, 4, 5], function (item) {
+        return item * 10;
+    }));
+}
+
+{
+    console.log('数组的全量替换:', [1, '2', undefined, NaN].fill('7').fill(7));
+    console.log('数组的指定替换:', [1, '2', undefined, NaN, 8, 9, 0].fill('7').fill(7, 2, 5));
+}
+
+{
+    var _arr = ['s', 'f', 'l'];
+
+    for (var _i = 0; _i < _arr.length; _i++) {
+        var index = _arr[_i];
+        console.log('返回数组val:', index);
+    }
+
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = ['s', 'f', 'l'].keys()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var _index = _step.value;
+
+            console.log('返回数组下标:', _index);
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+}
 
 /***/ })
 /******/ ]);
